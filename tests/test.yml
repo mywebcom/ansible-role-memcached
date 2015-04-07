@@ -1,6 +1,7 @@
 ---
 # file tests/test.yml
-- hosts: local
+- hosts: localhost
+  connection: local
   remote_user: root
   roles:
     - ansible-role-memcached
