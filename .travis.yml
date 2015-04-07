@@ -10,6 +10,7 @@ install:
   - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 
 script:
-  - 'ansible-playbook -i tests/inventory tests/test.yml'
+  - 'ansible-playbook -i tests/inventory tests/test.yml --syntax-check'
+  - 'ansible-playbook -i tests/inventory tests/test.yml --connection=local -vvvv --sudo'
   - '(echo "set key 0 900 4"; echo "data"; sleep 5;echo "quit") | telnet 127.0.0.1 11211 | grep -q "STORED" && (echo "Test Passed" && exit 0) || (echo "Test Failed" && exit 1)'
   - '(echo "get key"; sleep 5;echo "quit") | telnet 127.0.0.1 11211 | grep -q "data" && (echo "Test Passed" && exit 0) || (echo "Test Failed" && exit 1)'
